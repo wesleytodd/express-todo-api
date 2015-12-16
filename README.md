@@ -44,4 +44,4 @@ PUT /api/todos/:id/:status
 DELETE /api/todos/:id
 ```
 
-**Users:** kindof started, so you can do assigning tasks to a user
+**Users:** kindof started, so you can do assigning tasks to a user, but not actually done
