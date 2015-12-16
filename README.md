@@ -1,6 +1,6 @@
 # A Todo API
 
-This is basically an example api to be used to making example todo apps.  It can be used stand-alone or with an existing Express app.
+This is an example api to be used when making example todo apps.  It can be used stand-alone or with an existing Express app.
 
 ## But WHYYYYYY??????
 
