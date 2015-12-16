@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "A todo application api",
   "main": "index.js",
+  "bin": {
+    "express-todo-api": "./bin/express-todo-api"
+  },
   "scripts": {
-    "start": "node index.js",
+    "start": "./bin/express-todo-api",
     "mocks": "mokr up todos",
     "mocks-down": "mokr down todos",
     "test": "echo \"Error: no test specified\" && exit 1"

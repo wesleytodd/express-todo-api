@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+var express = require('express');
+var api = require('../index.js');
+var port = process.env.npm_package_config_port || 4000;
+var app = new express();
+
+app.use(api());
+app.listen(port, function(err) {
+	if (err) {
+		return console.error(err);
+	}
+	console.log('Listening on ' + port);
+});

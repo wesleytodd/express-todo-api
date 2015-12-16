@@ -20,16 +20,3 @@ var main = module.exports = function(opts) {
 
 	return app;
 };
-
-// If called directly, start app
-if (require.main === module) {
-	var port = process.env.npm_package_config_port || 4000;
-	var app = new express();
-	app.use(main());
-	app.listen(port, function(err) {
-		if (err) {
-			return console.error(err);
-		}
-		console.log('Listening on ' + port);
-	});
-}
