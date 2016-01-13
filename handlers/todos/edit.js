@@ -21,8 +21,8 @@ module.exports = function (options) {
 			return sendError(res, 400, 'Invalid status: ' + req.body.status);
 		}
 
-		// Verify that users are enabled and exists, then add it
-		if (options.users && req.body.assignedTo) {
+		// Change assigned to user?
+		if (req.body.assignedTo) {
 			var exists = store.users.filter(function (u) {
 				return u.id === req.body.assignedTo;
 			}).length > 0;
@@ -44,6 +44,6 @@ module.exports = function (options) {
 		store.todos.splice(store.todos.indexOf(todo), 1, todo);
 
 		// Respond
-		res.status(204).json(todo);
+		res.status(200).json(todo);
 	};
 };

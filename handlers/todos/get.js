@@ -23,8 +23,30 @@ module.exports = function (options) {
 			});
 		}
 
-		// Only show as many users as the limit
+		// Only show as many todos as the limit
 		responseData.todos = responseData.todos.slice(offset, offset + limit);
+
+		// With user?
+		if (req.query.withUser) {
+			responseData.todos = responseData.todos.map(function (todo) {
+				if (!todo.assignedTo) {
+					return todo;
+				}
+
+				var user = store.users.filter(function (u) {
+					return u.id === todo.assignedTo;
+				})[0];
+
+				// No user
+				if (!user) {
+					delete todo.assignedTo;
+					return todo;
+				}
+
+				todo.assignedTo = user;
+				return todo;
+			});
+		}
 
 		// Next link
 		var next = nextLink(options.prefix + '/todos', store.todos.length, limit, offset, {
@@ -35,7 +57,7 @@ module.exports = function (options) {
 		}
 
 		// Previous link
-		var prev = prevLink(options.prefix + '/todos', store.users.length, limit, offset, {
+		var prev = prevLink(options.prefix + '/todos', store.todos.length, limit, offset, {
 			status: status
 		});
 		if (prev) {

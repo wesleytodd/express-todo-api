@@ -1,6 +1,6 @@
 var sendError = require('../../util/send-error');
 
-// Delete a todo
+// Create a new todo
 module.exports = function (options) {
 	// Shorter reference to data store
 	var store = options.store;
@@ -15,10 +15,21 @@ module.exports = function (options) {
 			return sendError(res, 404, 'Todo not found');
 		}
 
+		// Verify that user exists
+		var user = store.users.filter(function (u) {
+			return u.id === req.params.userId;
+		})[0];
+		if (!user) {
+			return sendError(res, 400, 'User not found: ' + req.params.userId);
+		}
+
+		// Set values
+		todo.assignedTo = user.id;
+
 		// Save data to store
-		store.todos.splice(store.todos.indexOf(todo), 1);
+		store.users.splice(store.users.indexOf(user), 1, user);
 
 		// Respond
-		res.status(204).send();
+		res.status(200).json(todo);
 	};
 };

@@ -1,4 +1,5 @@
 var express = require('express');
+var defined = require('defined');
 var bodyParser = require('body-parser');
 var todoRoutes = require('./handlers/todos');
 var userRoutes = require('./handlers/users');
@@ -6,17 +7,22 @@ var store = require('./util/store');
 
 module.exports = function (opts) {
 	opts = opts || {};
-	opts.prefix = opts.prefix || '/api';
-	opts.users = opts.users || false;
-	opts.store = opts.store || store;
+	opts.prefix = defined(opts.prefix, '/api');
+	opts.bodyParser = defined(opts.bodyParser, true);
+	opts.store = defined(opts.store, store);
 
 	var app = new express.Router();
-	app.use(bodyParser.json());
+
+	// Should we use the body parser?
+	if (opts.bodyParser) {
+		app.use(bodyParser.json());
+	}
+
+	// Hook in todo routes
 	app.use(opts.prefix + '/todos', todoRoutes(opts));
 
-	if (opts.users) {
-		app.use(opts.prefix + '/users', userRoutes(opts));
-	}
+	// Hook in user routes
+	app.use(opts.prefix + '/users', userRoutes(opts));
 
 	return app;
 };

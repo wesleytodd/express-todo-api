@@ -7,7 +7,9 @@ module.exports = function (options) {
 	var store = options.store;
 
 	return function (req, res) {
-		var todo = store.todos.get(req.params.id);
+		var todo = store.todos.filter(function (t) {
+			return t.id === req.params.id;
+		})[0];
 
 		// No todo with that id
 		if (!todo) {
@@ -23,7 +25,7 @@ module.exports = function (options) {
 		todo.status = req.body.status || todo.status;
 
 		// Save data to store
-		store.update(req.params.id, todo);
+		store.todos.splice(store.todos.indexOf(todo), 1, todo);
 
 		// Respond
 		res.status(200).json(todo);

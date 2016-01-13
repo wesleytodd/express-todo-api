@@ -1,25 +1,17 @@
-var data = require('../data/todos');
+var data = require('../data/users');
 var request = require('request');
-
-module.exports.dependsOn = ['users'];
 
 module.exports.up = function (next) {
 	var run = 0;
 	var errors = null;
-	this.state.todoIds = [];
+	this.state.userIds = [];
 
-	data.forEach(function (todo) {
-		// If users is run, assign to a random user
-		if (this.dependencies.users.state.userIds && this.dependencies.users.state.userIds.length) {
-			var uids = this.dependencies.users.state.userIds;
-			todo.assignedTo = uids[Math.floor(Math.random() * uids.length)];
-		}
-
+	data.forEach(function (user) {
 		request({
 			method: 'POST',
-			url: 'http://localhost:4000/api/todos',
+			url: 'http://localhost:4000/api/users',
 			json: true,
-			body: todo
+			body: user
 		}, function (err, resp, body) {
 			if (!err && resp.statusCode > 300) {
 				err = new Error('Non 200 response: ' + resp.statusCode + ' - ' + JSON.stringify(resp.body));
@@ -33,7 +25,7 @@ module.exports.up = function (next) {
 			}
 
 			if (!err && body) {
-				this.state.todoIds.push(body.id);
+				this.state.userIds.push(body.id);
 			}
 
 			run++;
@@ -45,14 +37,14 @@ module.exports.up = function (next) {
 };
 
 module.exports.down = function (next) {
-	var todos = this.state.todoIds || [];
+	var users = this.state.userIds || [];
 	var run = 0;
 	var errors = null;
 
-	todos.forEach(function (id) {
+	users.forEach(function (id) {
 		request({
 			method: 'DELETE',
-			url: 'http://localhost:4000/api/todos/' + id
+			url: 'http://localhost:4000/api/users/' + id
 		}, function (err, resp, body) {
 			if (!err && resp.statusCode > 300) {
 				err = new Error('Non 200 response');
@@ -66,7 +58,7 @@ module.exports.down = function (next) {
 			}
 
 			if (!err) {
-				this.state.todoIds.splice(this.state.todoIds.indexOf(id), 1);
+				this.state.userIds.splice(this.state.userIds.indexOf(id), 1);
 			}
 
 			run++;

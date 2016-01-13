@@ -1,14 +1,23 @@
 #!/usr/bin/env node
 
-var express = require('express');
+var app = require('commander');
+var express = require('express')();
+var pkg = require('../package.json');
 var api = require('../index.js');
-var port = process.env.npm_package_config_port || 4000;
-var app = new express();
 
-app.use(api());
-app.listen(port, function (err) {
+app.version(pkg.version);
+app.option('-p, --port [port]', 'The server port', process.env.npm_package_config_port || 4000);
+app.option('-P --prefix [path]', 'The api route prefix', '/api');
+app.parse(process.argv);
+
+// Hook in the api routes
+express.use(api({
+	prefix: app.prefix
+}));
+
+var server = express.listen(app.port, function (err) {
 	if (err) {
 		return console.error(err);
 	}
-	console.log('Listening on ' + port);
+	console.log('Listening on ' + server.address().port);
 });

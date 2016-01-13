@@ -14,7 +14,7 @@ module.exports = function (options) {
 
 		req.body.status = req.body.status || 'active';
 
-		// Verify that users are enabled and exists
+		// Verify that todos are enabled and exists
 		if (!status.valid(req.body.status)) {
 			return sendError(res, 400, 'Invalid status: ' + req.body.status);
 		}
@@ -27,8 +27,8 @@ module.exports = function (options) {
 			created: Date.now()
 		};
 
-		// Verify that users are enabled and exists, then add it
-		if (options.users && req.body.assignedTo) {
+		// Assigned to a user?
+		if (req.body.assignedTo) {
 			var exists = store.users.filter(function (u) {
 				return u.id === req.body.assignedTo;
 			}).length > 0;

@@ -20,13 +20,15 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.14.1",
+    "commander": "^2.9.0",
+    "defined": "^1.0.0",
     "express": "^4.13.3",
     "faker": "^3.0.1",
     "seamless-immutable": "^4.1.1",
     "uuid": "^2.0.1"
   },
   "devDependencies": {
-	"happiness": "git+ssh://git@github.com:JedWatson/happiness.git#standard-fork",
+    "happiness": "git+ssh://git@github.com:JedWatson/happiness.git#standard-fork",
     "mokr": "^1.2.0",
     "request": "^2.67.0"
   },
