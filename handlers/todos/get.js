@@ -28,6 +28,11 @@ module.exports = function (options) {
 				return false;
 			}
 
+			// Filter by search text
+			if (req.query.query && todo.text.toLowerCase().indexOf(req.query.query.toLowerCase()) === -1) {
+				return false;
+			}
+
 			return true;
 		});
 		
