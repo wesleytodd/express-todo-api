@@ -2,11 +2,11 @@ var sendError = require('../../util/send-error');
 var status = require('../../util/status');
 
 // Create a new todo
-module.exports = function(options) {
+module.exports = function (options) {
 	// Shorter reference to data store
 	var store = options.store;
 
-	return function(req, res) {
+	return function (req, res) {
 		var todo = store.todos.get(req.params.id);
 
 		// No todo with that id

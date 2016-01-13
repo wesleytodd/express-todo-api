@@ -1,18 +1,18 @@
 var data = require('../data/todos');
 var request = require('request');
 
-module.exports.up = function(next) {
+module.exports.up = function (next) {
 	var run = 0;
 	var errors = null;
 	this.state.todoIds = [];
 
-	data.forEach(function(todo) {
+	data.forEach(function (todo) {
 		request({
 			method: 'POST',
 			url: 'http://localhost:4000/api/todos',
 			json: true,
 			body: todo
-		}, function(err, resp, body) {
+		}, function (err, resp, body) {
 			if (!err && resp.statusCode > 300) {
 				err = new Error('Non 200 response: ' + resp.statusCode + ' - ' + JSON.stringify(resp.body));
 			}
@@ -36,16 +36,16 @@ module.exports.up = function(next) {
 	}.bind(this));
 };
 
-module.exports.down = function(next) {
+module.exports.down = function (next) {
 	var todos = this.state.todoIds || [];
 	var run = 0;
 	var errors = null;
 
-	todos.forEach(function(id) {
+	todos.forEach(function (id) {
 		request({
 			method: 'DELETE',
 			url: 'http://localhost:4000/api/todos/' + id
-		}, function(err, resp, body) {
+		}, function (err, resp, body) {
 			if (!err && resp.statusCode > 300) {
 				err = new Error('Non 200 response');
 			}

@@ -1,6 +1,6 @@
 var url = require('url');
 
-module.exports = function(u, total, limit, offset, qry) {
+module.exports = function (u, total, limit, offset, qry) {
 	qry = qry || {};
 	qry.limit = limit;
 	qry.offset = offset + limit;

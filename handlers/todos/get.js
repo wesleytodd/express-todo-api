@@ -1,14 +1,14 @@
 var nextLink = require('../../util/next-link');
 var prevLink = require('../../util/prev-link');
 
-module.exports = function(options) {
+module.exports = function (options) {
 	// Shorter reference to data store
 	var store = options.store;
 
-	return function(req, res) {
+	return function (req, res) {
 		// Accpted query params
-		var limit = parseInt(req.query.limit || 5);
-		var offset = parseInt(req.query.offset || 0);
+		var limit = parseInt(req.query.limit || 5, 10);
+		var offset = parseInt(req.query.offset || 0, 10);
 		var status = (req.query.status || 'all').toLowerCase();
 		var responseData = {
 			_links: {},
@@ -18,7 +18,7 @@ module.exports = function(options) {
 
 		// Filter by status
 		if (status !== 'all') {
-			responseData.todos = store.todos.filter(function(todo) {
+			responseData.todos = store.todos.filter(function (todo) {
 				return todo.status === status;
 			});
 		}

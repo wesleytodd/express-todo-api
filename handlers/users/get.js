@@ -1,14 +1,14 @@
 var nextLink = require('../../util/next-link');
 var prevLink = require('../../util/prev-link');
 
-module.exports = function(options) {
+module.exports = function (options) {
 	// Shorter reference to data store
 	var store = options.store;
 
-	return function(req, res) {
+	return function (req, res) {
 		// Accpted query params
-		var limit = parseInt(req.query.limit || 5);
-		var offset = parseInt(req.query.offset || 0);
+		var limit = parseInt(req.query.limit || 5, 10);
+		var offset = parseInt(req.query.offset || 0, 10);
 		var query = (req.query.query || '').toLowerCase();
 		var responseData = {
 			_links: {},
@@ -18,9 +18,9 @@ module.exports = function(options) {
 
 		// Filter by query
 		if (query) {
-			responseData.users = store.users.filter(function(user) {
+			responseData.users = store.users.filter(function (user) {
 				return !!(user.slug.toLowerCase().indexOf(query) !== -1);
-			}).sort(function(a, b) {
+			}).sort(function (a, b) {
 				return a.slug.toLowerCase().indexOf(query) - b.slug.toLowerCase().indexOf(query);
 			});
 		}
@@ -29,7 +29,7 @@ module.exports = function(options) {
 		responseData.users = responseData.users.slice(offset, offset + limit);
 
 		// Next link
-		var next = nextLink(opts.prefix + '/users', store.users.length, limit, offset, {
+		var next = nextLink(options.prefix + '/users', store.users.length, limit, offset, {
 			query: query
 		});
 		if (next) {
@@ -37,7 +37,7 @@ module.exports = function(options) {
 		}
 
 		// Previous link
-		var prev = prevLink(opts.prefix + '/users', store.users.length, limit, offset, {
+		var prev = prevLink(options.prefix + '/users', store.users.length, limit, offset, {
 			query: query
 		});
 		if (prev) {

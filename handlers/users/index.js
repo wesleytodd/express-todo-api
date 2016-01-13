@@ -1,7 +1,6 @@
 var express = require('express');
 
-module.exports = function(options) {
-
+module.exports = function (options) {
 	var app = express.Router();
 
 	// Get a listing of tusers

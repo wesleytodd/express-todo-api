@@ -4,7 +4,7 @@ var todoRoutes = require('./handlers/todos');
 var userRoutes = require('./handlers/users');
 var store = require('./util/store');
 
-var main = module.exports = function(opts) {
+module.exports = function (opts) {
 	opts = opts || {};
 	opts.prefix = opts.prefix || '/api';
 	opts.users = opts.users || false;
