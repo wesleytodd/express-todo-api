@@ -31,8 +31,8 @@ $ express-todo-api --help
 
 ```javascript
 var app = require('express')();
-app.use(require('express-todo-api'));
-app.listen();
+app.use(require('express-todo-api')());
+app.listen(4000);
 ```
 
 ## Routes
@@ -41,7 +41,7 @@ Todos:
 
 ```
 # Get a list of todos
-GET /api/todos[?limit=<Number>&offset=<Number>&status=<String (active|complete|all)>]
+GET /api/todos[?limit=<Number>&offset=<Number>&status=<String (active|complete|all)>&query=<String (text)&assignedTo=<String (user.id)>>]
 
 # Create a new todo
 POST /api/todos
