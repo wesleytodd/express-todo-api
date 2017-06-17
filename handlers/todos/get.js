@@ -35,7 +35,7 @@ module.exports = function (options) {
 
 			return true;
 		});
-		
+
 		// Add total
 		responseData.total = responseData.todos.length;
 
@@ -45,7 +45,6 @@ module.exports = function (options) {
 		// With user?
 		if (req.query.withUser) {
 			responseData.todos = responseData.todos.map(function (todo) {
-
 				if (!todo.assignedTo) {
 					return todo;
 				}
